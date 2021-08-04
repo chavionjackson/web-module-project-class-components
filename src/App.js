@@ -1,6 +1,7 @@
 import React from "react";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
+import "./components/Todo.css"
 
 const Tasks = [
   {
@@ -19,33 +20,48 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      Tasks: Tasks
-    }
+      taskArray: Tasks,
+    };
   }
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
   addTask = (newTask) => {
+    const newTasks = {
+      task: newTask,
+      id: Date.now(),
+      completed: false,
+    };
     this.setState({
       ...this.state,
-      Tasks: [
-        ...this.state.Tasks,
-        {
-          task: newTask,
-          id: Date.now(),
-          completed: false
-        }
-      ]
+      taskArray: [...Tasks, newTasks],
+    });
+    console.log("Task added!", newTasks);
+  };
+
+  toggleComplete = (id) => {
+    const newArray = this.state.taskArray.map((item) => {
+      if (item.id === id) {
+        return {
+          ...item,
+          completed: !item.completed,
+        };
+      } else {
+        return item;
+      }
+    });
+    this.setState({
+      ...this.state,
+      taskArray: newArray
     })
-    console.log("Task added!", newTask)
-  }
-  
+  };
+
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoList tasks={this.state.Tasks} />
-        <TodoForm onChange={this.handleChanges} addTask={this.addTask} />
+        <TodoList toggleComplete={this.toggleComplete} tasks={this.state.taskArray} />
+        <TodoForm addTask={this.addTask} />
       </div>
     );
   }

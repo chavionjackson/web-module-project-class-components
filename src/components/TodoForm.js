@@ -23,7 +23,7 @@ class TodoForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <label>
             <input
               type="text"
@@ -32,8 +32,8 @@ class TodoForm extends Component {
               onChange={this.handleChanges}
             />
           </label>
-          <button>Add Todo</button>
-          <button>Clear Completed</button>
+          <button onClick={this.handleSubmit} >Add Todo</button>
+          <button onClick={this.props.deleteTask} >Clear Completed</button>
         </form>
       </div>
     );

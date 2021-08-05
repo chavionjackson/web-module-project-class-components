@@ -3,16 +3,23 @@
 import React from "react";
 import Todo from "./Todo";
 
-const TodoList = (props) => {
-  return (
-    <div>
-      {props.tasks.map(item => {
-        return (
-            <Todo key={item.id} item={item} deleteTask={props.deleteTask} toggleComplete={props.toggleComplete} />
-        ) 
-      })}
-    </div>
-  );
-};
+class TodoList extends React.Component {
+  render() {
+    return (
+      <div>
+        {this.props.tasks.map((item) => {
+          return (
+            <Todo
+              key={item.id}
+              item={item}
+              deleteTask={this.props.deleteTask}
+              toggleComplete={this.props.toggleComplete}
+            />
+          );
+        })}
+      </div>
+    );
+  }
+}
 
 export default TodoList;
